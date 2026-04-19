@@ -1,26 +1,87 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <title>Home Questionnaire<span id="selection-marker-1" class="redactor-selection-marker"></span></title> 
-    <!--Placeholder for Segment Snippet --> 
-</head> 
-<body> 
-<h1>What is your favorite place to travel?</h1> 
-<p>I am building a directory of the sweetest travel destinations.</p>  
-<form name="travel" onsubmit="identify(event)">
-     What is your favorite travel destination?
-    <input name="destination" required="" size="81" type="text"/> 
-    <br><br><br> 
-    Any recommendations (cool things to do, places to visit or restaurants to eat)? 
-    <br><br> 
-    <textarea cols="81" name="details" required="" rows="10">
-    </textarea> 
-    <br><br> 
-    Name: <input name="fullname" required="" size="75" type="text"/> 
-    <br><br> 
-    Email: <input name="email" required="" size="75" type="email"/> 
-    <br><br>
-    <input name="submit" type="submit" value="submit"/>
-</form> 
-    <!--Placeholder for identify and track script -->
-</body> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Questionnaire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        input, textarea {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card p-8 md:p-12 w-full max-w-2xl mx-4">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-extrabold text-gray-800 mb-2">Where to next? ✈️</h1>
+            <p class="text-gray-600">Help us build a directory of the world's sweetest travel destinations.</p>
+        </header>
+
+        <form name="travel" onsubmit="identify(event)" class="space-y-6">
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Favorite Destination</label>
+                <input name="destination" required type="text" placeholder="e.g. Kyoto, Japan" 
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Your Recommendations</label>
+                <textarea name="details" required rows="4" placeholder="Cool things to do, hidden gems, or must-eat restaurants..."
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Name</label>
+                    <input name="fullname" required type="text" placeholder="John Doe"
+                        class="w-full px-4 py-3 rounded-xl bg-gray-50">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input name="email" required type="email" placeholder="john@example.com"
+                        class="w-full px-4 py-3 rounded-xl bg-gray-50">
+                </div>
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg">
+                Share My Recommendations
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function identify(event) {
+            event.preventDefault();
+            // Placeholder for your Segment / Analytics logic
+            console.log("Form Submitted Successfully!");
+            alert("Thanks for sharing your journey!");
+        }
+    </script>
+
+</body>
+</html>
