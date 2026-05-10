@@ -31,12 +31,15 @@
             transform: translateY(-2px);
         }
     </style>
+
     <script>
-  !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="peClZvcMKm9m6HrZ7l7M5ezKdA7NcC8P";;analytics.SNIPPET_VERSION="5.2.0";
-  analytics.load("peClZvcMKm9m6HrZ7l7M5ezKdA7NcC8P");
-  analytics.page();
-  }}();
-</script>
+        !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};
+        
+        // YOUR WRITE KEY
+        analytics.load("peClZvcMKm9m6HrZ7l7M5ezKdA7NcC8P");
+        analytics.page();
+        }();
+    </script>
 </head>
 <body>
 
@@ -46,7 +49,7 @@
             <p class="text-gray-600">Help us build a directory of the world's sweetest travel destinations.</p>
         </header>
 
-        <form name="travel" onsubmit="identify(event)" class="space-y-6">
+        <form id="travelForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
             
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Favorite Destination</label>
@@ -80,37 +83,36 @@
         </form>
     </div>
 
-    <script>
-        function identify(event) {
-            event.preventDefault();
-            // Placeholder for your Segment / Analytics logic
-            console.log("Form Submitted Successfully!");
-            alert("Thanks for sharing your journey!");
-        }
-    </script>
-
     <script type="text/javascript">
-      function identify(e){
+      function handleFormSubmit(e) {
         e.preventDefault();
+        
         var form = e.target;
         var email = form["email"].value;
         var fullname = form["fullname"].value;
         var destination = form["destination"].value;
         var details = form["details"].value;
-        var user = {
+
+        // 1. Identify the user in Segment
+        // Note: Using email as UserID is a common fallback if no Database ID exists
+        analytics.identify(email, {
+            email: email, 
+            name: fullname
+        });
+
+        // 2. Track the Event
+        analytics.track('Destination Submitted', {
             email: email, 
             name: fullname, 
             destination: destination, 
             details: details
-        };
-        analytics.identify('1234', {
-            email: email, 
-            name: fullname
         });
-        analytics.track('destination submitted', user, function() {
-            window.location.href = "";
-        });
+
+        // 3. User Feedback 
+        // We removed the window.location.href = "" which was likely breaking the tracking
+        alert("Thanks for sharing your journey, " + fullname + "!");
+        form.reset();
       }
-</script>
+    </script>
 </body>
 </html>
